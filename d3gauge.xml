@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 【参考URL】https://github.com/prog-mitsu/runJsInGoogleSite -->
+
+<!-- https://sites.google.com/site/d3gaugedemo/home/d3gauge.xml -->
+<!-- サイズは横800ピクセル, 高さ600, webページとして作成し、ページ設定で添付ファイルの許可を外す(全部のチェックを外す) -->
+
+<Module>
+
+  <!-- ガジェット名 -->
+  <ModulePrefs title="d3gauge" />
+
+  <Content type="html">
+    <![CDATA[
+
+      <!-- JSファイル -->
+      <link rel="stylesheet" type="text/css" href='//sites.google.com/site/d3gaugedemo/home/d3gauge.css'/>
+      <script type="text/javascript" src='//sites.google.com/site/d3gaugedemo/home/d3gauge-min.js'></script>
+
+      <h1>d3gauge</h1>
+
+      <div class="chartContainer">
+        <div id="pieGauge"></div>
+        <div id="rectGauge"></div>
+      </div>
+
+      <script>
+        d3gauge.main();
+      </script>
+
+    ]]>
+  </Content>
+</Module>

@@ -1,0 +1,96 @@
+@charset "UTF-8";
+
+/* リセット開始(ブラウザのデフォルトをあてにしない) */
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+  margin-bottom: 6pt;
+}
+
+ol,ul,dl {
+  list-style-position: inside;
+}
+
+/* リセット完了 */
+
+/* 標準セレクタ開始 */
+
+body {
+  font: 10pt 'Trebuchet MS', Verdana, Helvetica, Arial, Meiryo, sans-serif;
+  color: #444;
+  background: #fff;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link,
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 800;
+  color: #000;
+}
+
+/* 標準セレクタ終了 */
+
+/* pieGauge */
+
+.piegauge-layer text {
+  pointer-events: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 14px;
+}
+
+.piegauge-pointer-layer {
+  fill: #330099;
+  stroke: #33ccff;
+}
+
+.piegauge-tick-layer text {
+  text-anchor: middle;
+  font-size: 14px;
+  fill: #666;
+}
+
+/* rectGauge */
+
+.rectgauge-layer text {
+  pointer-events: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 14px;
+}
+
+.rectgauge-pointer-layer {
+  fill: #330099;
+  stroke: none;
+  /* stroke: #33ccff; */
+}
+
+.rectgauge-tick-layer text {
+  text-anchor: middle;
+  font-size: 14px;
+  fill: #666;
+}
