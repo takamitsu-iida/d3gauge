@@ -12,7 +12,8 @@ module.exports = function (grunt) {
           'static/d3.4.4.0/d3.js',
           'static/site/js/d3gauge.startup.js',
           'static/site/js/d3gauge.pieGauge.js',
-          'static/site/js/d3tide.rectGauge.js'
+          'static/site/js/d3gauge.rectGauge.js',
+          'static/site/js/d3gauge.vrectGauge.js',
         ],
         // 出力ファイルの指定
         dest: 'static/site/dist/d3gauge.js'

@@ -58,18 +58,26 @@ strong {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: 14px;
 }
 
-.piegauge-pointer-layer {
+.piegauge-pointer-needle {
   fill: #330099;
   stroke: #33ccff;
 }
 
-.piegauge-tick-layer text {
-  text-anchor: middle;
+.piegauge-pointer-label {
   font-size: 14px;
+  fill: #330099;
+}
+
+.piegauge-tick-layer text {
+  font-size: 14px;
+  text-anchor: middle;
   fill: #666;
+}
+
+.piegauge-title-text {
+  font-size: 16px;
 }
 
 /* rectGauge */
@@ -80,17 +88,53 @@ strong {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: 14px;
 }
 
 .rectgauge-pointer-layer {
   fill: #330099;
   stroke: none;
-  /* stroke: #33ccff; */
+}
+
+.rectgauge-pointer-label {
+  font-size: 14px;
+  fill: #330099;
 }
 
 .rectgauge-tick-layer text {
-  text-anchor: middle;
   font-size: 14px;
   fill: #666;
+}
+
+.rectgauge-title-text {
+  font-size: 16px;
+}
+
+
+/* vrectGauge */
+
+.vrectgauge-layer text {
+  pointer-events: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.vrectgauge-pointer-layer {
+  fill: #330099;
+  stroke: none;
+}
+
+.vrectgauge-pointer-label {
+  font-size: 14px;
+  fill: #330099;
+}
+
+.vrectgauge-tick-layer text {
+  font-size: 14px;
+  fill: #666;
+}
+
+.vrectgauge-title-text {
+  font-size: 16px;
 }

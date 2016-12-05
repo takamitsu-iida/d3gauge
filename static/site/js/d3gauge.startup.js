@@ -31,38 +31,55 @@
 (function() {
   d3gauge.main = function() {
     //
-    // pieGauge
-    //
-
-    // HTMLのコンテナを取得する
-    var pieContainer = d3.select('#pieGauge');
-
-    var pgauge = d3gauge.pieGauge().title('CPU使用率');
-
-    pieContainer
-      .append('svg')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', 300)
-      .attr('height', 200)
-      .call(pgauge);
-
-    //
     // rectGauge
     //
 
     // HTMLのコンテナを取得する
     var rectContainer = d3.select('#rectGauge');
 
-    var rgauge = d3gauge.rectGauge().title('CPU使用率');
+    var rgauge = d3gauge.rectGauge().title('rectGauge');
 
     rectContainer
       .append('svg')
       .attr('x', 0)
       .attr('y', 0)
-      .attr('width', 400)
-      .attr('height', 130)
+      .attr('width', rgauge.width())
+      .attr('height', rgauge.height())
       .call(rgauge);
+
+    //
+    // vrectGauge
+    //
+
+    // HTMLのコンテナを取得する
+    var vrectContainer = d3.select('#vrectGauge');
+
+    var vgauge = d3gauge.vrectGauge().title('vrectGage');
+
+    vrectContainer
+      .append('svg')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', vgauge.width())
+      .attr('height', vgauge.height())
+      .call(vgauge);
+
+    //
+    // pieGauge
+    //
+
+    // HTMLのコンテナを取得する
+    var pieContainer = d3.select('#pieGauge');
+
+    var pgauge = d3gauge.pieGauge().title('pieGauge');
+
+    pieContainer
+      .append('svg')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', pgauge.width())
+      .attr('height', pgauge.height())
+      .call(pgauge);
 
     //
     // 動作テスト
@@ -71,12 +88,13 @@
 
     setInterval(function() {
       updateValue();
-    }, 5 * 1000);
+    }, 3 * 1000);
 
     function updateValue() {
       var d = Math.random() * 100;
-      pgauge.update(d);
       rgauge.update(d);
+      vgauge.update(d);
+      pgauge.update(d);
     }
     //
   };

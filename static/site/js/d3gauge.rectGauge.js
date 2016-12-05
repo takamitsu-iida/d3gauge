@@ -19,9 +19,11 @@
 
     // 針を配置するレイヤ
     var CLASS_POINTER_LAYER = 'rectgauge-pointer-layer';
+    var CLASS_POINTER_NEEDLE = 'rectgauge-pointer-needle';
+    var CLASS_POINTER_LABEL = 'rectgauge-pointer-label';
 
     // ラベルのテキスト
-    var CLASS_LABEL_TEXT = 'rectgauge-label-text';
+    var CLASS_TITLE_TEXT = 'rectgauge-title-text';
 
     // ダミーデータ
     var dummy = [0];
@@ -62,7 +64,7 @@
 
     var xScale = d3.scaleLinear()
         .domain([minValue, maxValue])
-        .range([0, w])
+        .rangeRound([0, w])
         .clamp(true);
 
     // tick
@@ -82,42 +84,35 @@
     var rectWidth = xScale((maxValue - minValue) / majorTicks);
 
     // ポインタ
-    // 針へのセレクション
-    var pointer;
-    var pWidth = 6;
-    var pHeadLen = Math.round(Number(h) * 1.1);
-    var pTailLen = Math.round(Number(h) * 0.1);
+    var pointerLayer; // レイヤごと動かす
+    var pointerLabel; // 'text'へのセレクション
+    var pWidth = 18;
+    var pHeight = 18;
     /*
           |
-          o -pTailLen
-          |
-    -pW/2 |  pW/2
-     --o--+--o--->x
+       o  |  o (pWidth/2, -pHeight)
           |
           |
-          |
-          o pHeadLen
+          o (0, 0)
+   -------+------>x
           |
           y
     */
-    // 針はoをつなぐ4本のラインで構成
+    // 針はoをつなぐ3本のラインで構成
     var pointerDatas = [
-      [pWidth / 2, 0],
-      [0, -pTailLen],
-      [-(pWidth / 2), 0],
-      [0, pHeadLen],
-      [pWidth / 2, 0]
+      [0, 0],
+      [pWidth / 2, -pHeight],
+      [-pWidth / 2, -pHeight]
     ];
 
     // ポインタ用のパスジェネレータ
-    // 丸みを付けたければ.curveを指定
-    var pointerLine = d3.line(); // .curve(d3.curveMonotoneX);
+    var pointerLine = d3.line();
 
     // call()されたときに呼ばれる公開関数
     function exports(_selection) {
       container = _selection;
       _selection.each(function(_data) {
-        var newValue = _data;
+        var newValue = (_data) ? _data : minValue;
         //
         var chartLayerAll = container.selectAll('.' + CLASS_CHART_LAYER).data(dummy);
         chartLayer = chartLayerAll
@@ -168,50 +163,65 @@
 
         // ポインタを表示
         var pointerLayerAll = chartLayer.selectAll('.' + CLASS_POINTER_LAYER).data(dummy);
-        var pointerLayer = pointerLayerAll
+        pointerLayer = pointerLayerAll
           .enter()
           .append('g')
           .classed(CLASS_POINTER_LAYER, true)
           .merge(pointerLayerAll);
 
-        var pointerAll = pointerLayer.selectAll('.pointer').data([pointerDatas]);
-        pointer = pointerAll
+        var pointerNeedleAll = pointerLayer.selectAll('.' + CLASS_POINTER_NEEDLE).data([pointerDatas]);
+        pointerNeedleAll
           .enter()
           .append('path')
-          .classed('pointer', true)
-          .merge(pointerAll)
+          .classed(CLASS_POINTER_NEEDLE, true)
+          .merge(pointerNeedleAll)
           .attr('d', pointerLine);
-          // .attr('transform', 'translate(0)');
 
-        // チャートのタイトルを表示
-        var labelAll = chartLayer.selectAll('.' + CLASS_LABEL_TEXT).data([title]);
-        labelAll
+        var pointerLabelAll = pointerLayer.selectAll('.' + CLASS_POINTER_LABEL).data([newValue]);
+        pointerLabel = pointerLabelAll
           .enter()
           .append('text')
-          .classed(CLASS_LABEL_TEXT, true)
-          .merge(labelAll)
-          .attr('transform', 'translate(' + (w / 2) + ',' + (h + 40) + ')')
-          .attr('fill', '#000')
-          .attr('text-anchor', 'middle')
+          .classed(CLASS_POINTER_LABEL, true)
+          .merge(pointerLabelAll)
+          .attr('x', pWidth)
+          .attr('dy', '-0.5em')
           .text(function(d) {
             return d;
           });
 
-        exports.update(newValue === undefined ? 0 : newValue);
+        // チャートのタイトルを表示
+        var titleAll = chartLayer.selectAll('.' + CLASS_TITLE_TEXT).data([title]);
+        titleAll
+          .enter()
+          .append('text')
+          .classed(CLASS_TITLE_TEXT, true)
+          .merge(titleAll)
+          .attr('transform', 'translate(0,' + (h + margin.bottom) + ')')
+          .attr('dy', '-0.5em')
+          .text(function(d) {
+            return d;
+          });
+
+        update(newValue);
         //
       });
     }
 
-    exports.update = function(_) {
+    function update(_) {
       if (!arguments.length) {
         return this;
       }
+      pointerLabel.text(tickFormat(_));
       var x = xScale(_);
       var t = d3.transition().ease(d3.easeElastic).duration(duration);
-      pointer
+      pointerLayer
         .transition(t)
         .attr('transform', 'translate(' + x + ',0)');
       return this;
+    }
+
+    exports.update = function(_) {
+      return update(_);
     };
 
     exports.width = function(_) {
